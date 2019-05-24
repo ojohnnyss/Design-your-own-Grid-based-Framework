@@ -1,0 +1,368 @@
+@import 'modules/reset';
+@import 'mixins/clearfix';
+@import 'modules/box-sizing';
+@import 'mixins/bottom-footer';
+/*@import 'vendors/susy';*/
+
+/*comment this out if you do not want red border markers*/
+/*@import 'modules/red-borders';*/
+@import 'mixins/vertical-align';
+@import 'mixins/grid';
+@import 'mixins/dropdown-menu';
+@import 'mixins/respond-to';
+
+/*variables*/
+
+/*response size breakpoints*/
+$breakSmall: 720px;
+$breakLarge: 1120px;
+
+/*grid values*/
+$span1: 1;
+$span2: 2;
+$span3: 3;
+$span4: 4;
+$span6: 6;
+$span8: 8;
+$cols: 12;
+$gutterPercentage: 2%;
+
+/*footer*/
+$footerHeight: 50px;
+
+/*colors*/
+$black: #444;
+$blue: #0090e0;
+$darkBlue: #06b;
+$gray: #777;
+$lightGray: #999;
+$orange: orange;
+$white: #fff;
+
+/*font*/
+$defaultFont: helvetica;
+
+/*border*/
+$borderBottomGray: solid $lightGray 2px;
+
+/*margin and padding*/
+$margin: 15px;
+$bigPadding: 15px;
+$smallPadding: 10px;
+
+/*mixins*/
+
+@mixin hover-background($color) {
+	&:hover{
+		background-color: darken($color, 10%);
+		transition: background-color 0.2s ease;
+	}
+}
+
+/*reset anchor*/
+
+strong{
+	font-weight: bold;
+}
+a {
+    color: $blue;
+    text-decoration: none;
+    &:hover{
+		color: inherit; 
+		cursor: pointer; 
+    };
+}
+
+/*text styling*/
+
+p {
+	line-height: 1.5em;
+	padding: $smallPadding 0;
+}
+
+/*h1 styling*/
+h1{
+	font-size: 2.5em;
+	font-family: $defaultFont;
+	font-weight: bold;
+	padding: $smallPadding;
+	letter-spacing: 1px;
+}
+/*h2 styling*/
+h2{
+	@extend h1;
+	font-size: 1.7em;
+}
+/*h3 styling*/
+h3{
+	@extend h1;
+	color: $white;
+	font-size: 1.2em;	
+	display: inline-block;
+	padding: $smallPadding;
+}
+
+/*classes*/
+
+.cat-heading{
+	border-bottom: solid 2px;
+}
+.social{
+	img{
+		height: 20px;
+	}
+	a{
+		color: $darkBlue;
+	}
+	li{
+		display: inline-block;
+		margin-right: $smallPadding;
+	}
+	margin: $margin 0;
+}
+.ad{
+	margin-bottom: $margin;
+}
+.article,
+.ad{
+	> img{
+		width: 100%;
+	}
+}
+
+/*sections*/
+
+body{
+	font-family: $defaultFont;
+	height: 100%;
+}
+#wrap{
+	@include respond-to-sm($breakSmall){
+		width: 480px;
+	}
+	@include respond-to-md($breakSmall, $breakLarge){
+		width: 720px;
+	}
+	@include respond-to-lg($breakLarge){
+		width: 1120px;
+	}
+	margin: 0 auto $footerHeight auto;
+}
+header,
+#main{
+	width: 100%;
+}
+#banner{
+	@extend header;
+	img{
+		@include respond-to-sm($breakSmall){
+			width: 100%;
+		} 
+	}
+}
+
+nav{
+	width: 100%;
+	height: 50px;
+	background-color: $black;
+	margin-bottom: $margin;
+	.nav-links{
+		@include dropdown-menu;
+		@include grid-col($span8, $cols, $gutterPercentage);
+		@include vertical-align;
+		a{
+			color: $white;
+		}
+	}
+	ul, form{
+		@include respond-to-sm($breakSmall){
+			display: none;		
+		}
+	} 
+	ul{
+		background-color: inherit;
+		li{
+			background-color: inherit;
+			a{
+				@include hover-background($lightGray);
+				padding: $smallPadding;
+				font-size: 17px;
+				font-weight: bold;
+			}
+			li{
+				padding: $smallPadding;
+			}
+		}
+	}
+	form{
+		@include vertical-align; 
+		@include grid-col($span4, $cols, $gutterPercentage);
+		text-align: center;
+		height: 65%;
+		input{
+			height: 100%;
+			width: 70%;
+		}
+	}
+}
+
+#articles{
+	@include respond-to-md-lg($breakSmall){
+		@include grid-col($span8, $cols, $gutterPercentage);
+	}
+}
+#main-article{
+	> img{
+		width: 100%;
+	}
+	.social{
+		@extend .social;
+		padding: $bigPadding 0;
+		img{
+			height: 40px;
+		}
+	}
+}
+#sidebar{
+	@include respond-to-md-lg($breakSmall){
+		@include grid-col($span4, $cols, $gutterPercentage);
+	}
+	#subscribe,
+	.follow{
+		text-align: center;
+	}
+	#subscribe{
+		font-size: 1em;
+		color: $white;
+		background-color: $orange;
+		padding: 0 $smallPadding $smallPadding $smallPadding;
+		input{
+			margin-bottom: $margin;
+		}
+		button{
+			color: inherit;
+			background-color: $darkBlue;
+		}
+		input,
+		button{
+			width: 100%;
+			font-size: 1em;
+			height: 30px;
+		}
+	}
+	.follow{
+		color: $darkBlue;
+	}
+	.follow,
+	.store,
+	#random-post{
+		img{
+			width: 100%;
+		}
+	}
+	#popular-posts{
+		.cat-heading{
+			border-color: $orange;
+			h3{
+				background-color: $orange;
+			}
+		}
+		.article{
+			border-bottom: $borderBottomGray;
+			> img{
+				@include grid-col($span4, $cols, $gutterPercentage);
+			}
+			.post-details{
+				@include grid-col($span8, $cols, $gutterPercentage);	
+			}
+		}
+	}
+}
+
+#latest-posts{
+	.row{
+		margin-bottom: $margin;
+	}
+	.article{
+		@include grid-col($span6, $cols, $gutterPercentage);
+		border-bottom: $borderBottomGray;
+		height: 500px;
+		p{
+			margin-bottom: $margin;
+		}
+	}
+}
+#latest-posts,
+#previous-posts{
+	.cat-heading{
+		margin-bottom: $margin;	
+		border-color: $blue;
+		h3{
+			background-color: $blue;
+		}
+	}
+}
+#previous-posts{
+	.article{
+		height: 100px;
+		> img:first-child{
+			@include grid-col($span2, $cols, $gutterPercentage);
+		}
+		> a{
+			@include grid-col($span6, $cols, $gutterPercentage);	
+			@include vertical-align;
+		}
+		.social{
+			@include grid-col($span4, $cols, $gutterPercentage);		
+			@include vertical-align;
+		}
+	}
+	.archive-button{
+		float: right;
+	}
+	#page-nav{
+		clear: both;
+		margin-bottom: $margin;
+	}
+}
+#previous-posts,
+#popular-posts{
+	.article{
+		@include hover-background($white);
+		padding: $smallPadding 0;
+	}
+	button{
+		color: $white;
+		background-color: $gray;
+		font-size: 1em;
+		padding: $bigPadding;
+	}
+}
+footer{
+	height: $footerHeight;
+	text-align: center;
+	@include bottom-footer;
+	background-color: $black;
+	#footer-nav{
+		height: 90%;
+		margin: auto 0;
+	}
+	a{
+		color: $gray;
+	}
+	li{
+		&:first-child{
+			@include grid-col($span2, 5, $gutterPercentage);
+			text-align: center;
+		}
+		&:not(first-child){
+			@include grid-col($span1, 5, $gutterPercentage);
+		}
+	}
+	.middle{
+		a{
+			display: block;
+		}
+	}
+}
+
